@@ -1,6 +1,12 @@
-/* @import './base.css'; */
+@import "./base.css";
+@import url('https://fonts.cdnfonts.com/css/handjet-2');
 
 #app {
-
-}
+    min-width:  320px;
+    background-color: #1E1E1E;
+    margin: 0 auto;
+    padding: 0;
+    font-family: "Ruda", sans-serif;
+    font-weight: normal;
+  }
 
