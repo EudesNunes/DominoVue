@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <PaginaInicialView/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -8,13 +8,13 @@
 import { onMounted, ref, defineComponent } from 'vue';
 import PaginaInicialView from './views/PaginaInicialView.vue';
 export default defineComponent({
-    name: "App",
-    components: { PaginaInicialView },
-    setup() {
-        onMounted(() => {
-        });
-        return {};
-    },
+  name: "App",
+  components: { PaginaInicialView },
+  setup() {
+    onMounted(() => {
+    });
+    return {};
+  },
 });
 
 
@@ -22,8 +22,8 @@ export default defineComponent({
 
 
 <style scoped>
-.body{
-  margin: 0; 
+.body {
+  margin: 0;
   padding: 0;
 }
 </style>

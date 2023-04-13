@@ -1,6 +1,6 @@
 <template>
     <div>
-        sssss
+        Creditos
     </div>
 </template>
   

@@ -13,9 +13,9 @@
 		<div class="principal" id="principal">
 			<div class="box-cinza">
 				
-				<button class="botaojogar" id="botaojogar" @click="router.push('/regras')"> <b>Jogar Agora!</b></button>
-				<button class="botaoregras" id="botaoregras"> <b>Regras do Jogo</b></button>
-				<button class="botaocredito" id="botaocredito"> <b>Créditos</b></button>
+				<button class="botaojogar" id="botaojogar" @click="router.push('/jogo')"> <b>Jogar Agora!</b></button>
+				<button class="botaoregras" id="botaoregras" @click="router.push('/regras')"> <b>Regras do Jogo</b></button>
+				<button class="botaocredito" id="botaocredito" @click="router.push('/creditos')"> <b>Créditos</b></button>
 				<div class="homenagem" id="homenagem">
 					<p>Uma homenagem aos jogadores de Joinville </p>
 				</div>
