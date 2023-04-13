@@ -11,7 +11,16 @@
 			</div>
 		</nav>
 		<div class="principal" id="principal">
-			<div class="box-cinza"></div>
+			<div class="box-cinza">
+				<button class="botaojogar" id="botaojogar"> <b>Jogar Agora!</b></button>
+				<button class="botaoregras" id="botaoregras"> <b>Regras do Jogo</b></button>
+				<button class="botaocredito" id="botaocredito"> <b>Créditos</b></button>
+				<div class="homenagem" id="homenagem"> 
+					<p>Uma homenagem aos  jogadores de Joinville </p>
+				</div>
+				
+			</div>
+			
 		</div>
 	</div>
 </template>
@@ -44,7 +53,7 @@ export default defineComponent({
 
 <style scoped>
 .body {
-	background-image: url("src/assets/img/fundo.png");
+	background-image: url("src/assets/img/fundo_palmeiras.jpeg");
 	background-size: cover;
 	background-position: center center;
 	padding: 0;
@@ -59,13 +68,17 @@ nav {
 	font-family: 'Handjet', sans-serif;
 	color: #022E83;
 	width: 100%;
-	height: 100px;
+	height: 110px;
 	background-image: url("src/assets/img/Rectangle5.png");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 	padding: 0;
 	margin: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-bottom: 5px#022E83 solid;
 }
 
 h1 {
@@ -83,7 +96,8 @@ div.principal {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	margin-top: 55px;
+	display: block;
+	margin-top: 105px;
 
 }
 
@@ -91,10 +105,11 @@ div.principal {
 	background-color: #1e1e1ed3;
 	background-size: cover;
 	margin: 0 auto;
-	max-width: 400px;
+	max-width: 600px;
 	min-width: 200px;
-	height: 400px;
+	height: 650px;
 	border-radius: 40px;
+	margin-top: 60px;
 }
 
 .canto {
@@ -106,5 +121,45 @@ div.principal {
 }
 .meio{
 	margin: 0 auto;
+}
+.botaojogar{
+	background-color: #1A9AAB;
+	width: 400px;
+	height: 80px;
+	margin-top: 90px;
+	font-family: 'Handjet', sans-serif;
+	font-size: 40px;
+	color: white;
+	border-radius: 30px;
+}
+.botaoregras{
+	background-color: #E6DF37;
+	width: 400px;
+	height: 80px;
+	margin-top: 90px;
+	font-family: 'Handjet', sans-serif;
+	font-size: 40px;
+	color: white;
+	border-radius: 30px;
+}
+.botaocredito{
+	background-color: #0A7F55;
+	width: 400px;
+	height: 80px;
+	margin-top: 90px;
+	font-family: 'Handjet', sans-serif;
+	font-size: 40px;
+	color: white;
+	border-radius: 30px;
+	font-weight: bold;
+}
+div.homenagem{
+	font-size: 2rem;
+	color: white;
+	font-family: 'Handjet', sans-serif;
+	text-align: center;
+	width: 300px;
+	margin: 0 auto;
+	padding-top: 30px;
 }
 </style>
