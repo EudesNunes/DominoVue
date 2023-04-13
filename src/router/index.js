@@ -6,22 +6,22 @@ const router = createRouter({
     {
       path: "/",
       name: "inicial",
-      component: () => import("../views/PaginaInicialView.vue"),
+      component: () => import("@/views/PaginaInicialView.vue"),
     },
     {
       path: "/jogo",
       name: "jogo",
-      component: () => import("../views/JogoView.vue"),
+      component: () => import("@/views/JogoView.vue"),
     },
     {
       path: "/regras",
       name: "regras",
-      component: () => import("../views/RegrasDoJogoView.vue"),
+      component: () => import("@/views/RegrasDoJogoView.vue"),
     },
     {
       path: "/creditos",
       name: "creditos",
-      component: () => import("../views/CreditosView.vue"),
+      component: () => import("@/views/CreditosView.vue"),
     },
   ],
 });

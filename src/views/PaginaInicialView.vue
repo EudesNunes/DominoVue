@@ -12,26 +12,29 @@
 		</nav>
 		<div class="principal" id="principal">
 			<div class="box-cinza">
-				<button class="botaojogar" id="botaojogar"> <b>Jogar Agora!</b></button>
+				
+				<button class="botaojogar" id="botaojogar" @click="router.push('/regras')"> <b>Jogar Agora!</b></button>
 				<button class="botaoregras" id="botaoregras"> <b>Regras do Jogo</b></button>
 				<button class="botaocredito" id="botaocredito"> <b>Créditos</b></button>
-				<div class="homenagem" id="homenagem"> 
-					<p>Uma homenagem aos  jogadores de Joinville </p>
+				<div class="homenagem" id="homenagem">
+					<p>Uma homenagem aos jogadores de Joinville </p>
 				</div>
-				
 			</div>
-			
+
 		</div>
 	</div>
 </template>
   
 <script>
 import { onMounted, ref, defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
 	name: 'PaginaInicial',
 
 	setup() {
+
+		const router = useRouter();
 
 		onMounted(() => {
 
@@ -41,8 +44,7 @@ export default defineComponent({
 
 
 		return {
-
-
+			router
 		}
 	}
 
@@ -55,12 +57,13 @@ export default defineComponent({
 .body {
 	background-image: url("src/assets/img/fundo_palmeiras.jpeg");
 	background-size: cover;
-	background-position: center center;
+	background-position: center;
 	padding: 0;
 	border: 0;
 	display: block;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	min-height: 100vh;
+	max-height: 100%;
 	background-repeat: no-repeat;
 }
 
@@ -103,11 +106,10 @@ div.principal {
 
 .box-cinza {
 	background-color: #1e1e1ed3;
-	background-size: cover;
 	margin: 0 auto;
-	max-width: 600px;
-	min-width: 200px;
-	height: 650px;
+	max-width: 43%;
+	min-width: 230px;
+	height: 100%;
 	border-radius: 40px;
 	margin-top: 60px;
 }
@@ -119,47 +121,51 @@ div.principal {
 	justify-items: end;
 
 }
-.meio{
+
+.meio {
 	margin: 0 auto;
 }
-.botaojogar{
+
+.botaojogar {
 	background-color: #1A9AAB;
-	width: 400px;
-	height: 80px;
+	width: 70%;
+	height: 70px;
 	margin-top: 90px;
 	font-family: 'Handjet', sans-serif;
 	font-size: 40px;
 	color: white;
 	border-radius: 30px;
 }
-.botaoregras{
+
+.botaoregras {
 	background-color: #E6DF37;
-	width: 400px;
-	height: 80px;
-	margin-top: 90px;
+	width: 70%;
+	height: 70px;
+	margin-top: 10%;
 	font-family: 'Handjet', sans-serif;
 	font-size: 40px;
 	color: white;
 	border-radius: 30px;
 }
-.botaocredito{
+
+.botaocredito {
 	background-color: #0A7F55;
-	width: 400px;
-	height: 80px;
-	margin-top: 90px;
+	width: 70%;
+	height: 70px;
+	margin-top: 10%;
 	font-family: 'Handjet', sans-serif;
 	font-size: 40px;
 	color: white;
 	border-radius: 30px;
 	font-weight: bold;
 }
-div.homenagem{
+
+div.homenagem {
 	font-size: 2rem;
 	color: white;
 	font-family: 'Handjet', sans-serif;
 	text-align: center;
 	width: 300px;
 	margin: 0 auto;
-	padding-top: 30px;
-}
-</style>
+	margin-top: 1%;
+}</style>
