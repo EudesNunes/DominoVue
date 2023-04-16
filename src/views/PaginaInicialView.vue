@@ -100,15 +100,15 @@ div.principal {
 	align-items: center;
 	text-align: center;
 	display: block;
-	margin-top: 105px;
+	margin-top: 4%;
 
 }
 
 .box-cinza {
 	background-color: #1e1e1ed3;
 	margin: 0 auto;
-	max-width: 43%;
-	min-width: 230px;
+	max-width: 35%;
+	min-width: 400px;
 	height: 100%;
 	border-radius: 40px;
 	margin-top: 60px;
@@ -168,4 +168,8 @@ div.homenagem {
 	width: 300px;
 	margin: 0 auto;
 	margin-top: 1%;
-}</style>
+	line-height: 1;
+}
+
+
+</style>

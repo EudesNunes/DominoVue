@@ -42,32 +42,123 @@ export const usePecasStore = defineStore("pecas", {
     VezJogador: 0,
     jogadorPrimario: 0,
     PecasJogadas: [],
+    numerospossiveis: [],
+    PontosIA: 0,
+    PontosJog1: 0,
+    PontosJog2: 0,
+    PontosJog3: 0,
+    NumeroRodadas:0,
   }),
   actions: {
-    $reset(state) {
-      this.PecasCompra = {};
-      this.PecasMaoIA = {};
-      this.PecasMaoJogador1 = {};
-      this.PecasMaoJogador2 = {};
-      this.PecasMaoJogador3 = {};
+    $reset(tipo) {
+      switch (tipo) {
+        case 1:
+          this.PecasCompra = {};
+          this.PecasMaoIA = {};
+          this.PecasMaoJogador1 = {};
+          this.PecasMaoJogador2 = {};
+          this.PecasMaoJogador3 = {};
+          this.VezJogador = 0;
+          this.jogadorPrimario = 0;
+          this.PecasJogadas = [];
+          this.numerospossiveis = [];
+          break;
+      
+        default:
+          this.PecasCompra = {};
+          this.PecasMaoIA = {};
+          this.PecasMaoJogador1 = {};
+          this.PecasMaoJogador2 = {};
+          this.PecasMaoJogador3 = {};
+          this.QuantidadeJogadores = 0;
+          this.VezJogador = 0;
+          this.jogadorPrimario = 0;
+          this.PecasJogadas = [];
+          this.numerospossiveis = [];
+          this.PontosIA = 0;
+          this.PontosJog1 = 0;
+          this.PontosJog2 = 0;
+          this.PontosJog3 = 0;
+          this.NumeroRodadas = 0;
+          break;
+      }
+
     },
     jogarPeca(peca) {
+      this.checarnumeropossivel(peca);
+
       this.PecasJogadas.push(peca);
       switch (this.VezJogador) {
         case 0:
           this.PecasMaoIA.splice(this.PecasMaoIA.indexOf(peca), 1);
+          this.proximojogar();
+
           break;
         case 1:
           this.PecasMaoJogador1.splice(this.PecasMaoJogador1.indexOf(peca), 1);
+          this.proximojogar();
+
           break;
         case 2:
           this.PecasMaoJogador2.splice(this.PecasMaoJogador2.indexOf(peca), 1);
+          this.proximojogar();
+
           break;
         case 2:
           this.PecasMaoJogador3.splice(this.PecasMaoJogador3.indexOf(peca), 1);
+          this.proximojogar();
+
           break;
       }
-      this.proximojogar();
+    },
+    checarGanhador() {
+      //-2 = empate
+      //-1 = ninguem ganhou
+      //0 = IA ganhou
+      //1 = Jd1 ganhou
+      if (this.PontosIA > 50 && this.PontosJog1 == this.PontosIA) {
+        return -2;
+      }
+      else if (this.PontosIA > 50 && this.PontosJog1 < this.PontosIA) {
+        return 0;
+      } else if (this.PontosJog > 50) {
+        return 1;
+      }
+        return -1;
+ 
+    },
+    ChecarGanhadorRodada() {
+      //-2 = empate
+      //-1 = ninguem ganhou
+      //0 = IA ganhou
+      //1 = Jd1 ganhou
+
+      if (this.PecasMaoIA.length == 0) {
+        this.PecasMaoJogador1.forEach((element) => {
+          this.PontosIA += this.tamanhoPeca(element);
+        });
+       
+        return 0;
+      } else if (this.PecasMaoJogador1.length == 0) {
+        this.PecasMaoIA.forEach((element) => {
+          this.PontosJog1 += this.tamanhoPeca(element);
+        });
+       
+        return 1;
+      }else if(this.PecasCompra.length == 0){
+          if(this.posives(this.numerospossiveis, this.PecasMaoJogador1).length == 0 && this.posives(this.numerospossiveis, this.PecasMaoIA).length == 0 ){
+            this.PecasMaoIA.forEach((element) => {
+              this.PontosJog1 += this.tamanhoPeca(element);
+            });
+            this.PecasMaoJogador1.forEach((element) => {
+              this.PontosIA += this.tamanhoPeca(element);
+            }); 
+            return -2;
+          }
+        }
+    
+        return -1
+
     },
     maoPecas(state, getters) {
       const Posicoes = this.setPecasCompra;
@@ -95,8 +186,36 @@ export const usePecasStore = defineStore("pecas", {
     },
 
     NovoJogo(nJogadores) {
-      this.$reset();
+      this.$reset(0);
+      this.NumeroRodadas = 1;
       this.QuantidadeJogadores = nJogadores;
+      this.PecasMaoIA = this.maoPecas();
+      switch (nJogadores) {
+        case 1: {
+          this.PecasMaoJogador1 = this.maoPecas();
+          break;
+        }
+        case 2: {
+          this.PecasMaoJogador1 = this.maoPecas();
+          this.PecasMaoJogador2 = this.maoPecas();
+          break;
+        }
+        case 3: {
+          this.PecasMaoJogador1 = this.maoPecas();
+          this.PecasMaoJogador2 = this.maoPecas();
+          this.PecasMaoJogador3 = this.maoPecas();
+          break;
+        }
+        default:
+          break;
+      }
+      this.jogadorPrimario = this.escolhaInicio();
+      this.VezJogador = this.jogadorPrimario;
+    },
+    NovaRodada() {
+      this.$reset(1);
+      this.NumeroRodadas += 1;
+      const nJogadores = this.QuantidadeJogadores 
       this.PecasMaoIA = this.maoPecas();
       switch (nJogadores) {
         case 1: {
@@ -129,14 +248,37 @@ export const usePecasStore = defineStore("pecas", {
     },
     posives(numeros, mao) {
       const posibilidade = [];
-      numeros.forEach((element) => {
+      if (numeros.length == 0) {
+        let maior = 0;
         mao.forEach((elementMao) => {
           let peca = this.getPecas[elementMao];
-          if (element == peca.L1 || element == peca.L2) {
+          if (peca.L2 == peca.L1 && peca.L1 > maior) {
+            posibilidade.length = 0;
             posibilidade.push(elementMao);
+            maior = peca.L1;
           }
         });
-      });
+        if (posibilidade.length == 0) {
+          mao.forEach((elementMao) => {
+            let peca = this.getPecas[elementMao];
+            if (peca.L2 + peca.L1 > maior) {
+              posibilidade.length = 0;
+              posibilidade.push(elementMao);
+              maior = peca.L2 + peca.L1;
+            }
+          });
+        }
+      } else {
+        numeros.forEach((element) => {
+          mao.forEach((elementMao) => {
+            let peca = this.getPecas[elementMao];
+            if (element == peca.L1 || element == peca.L2) {
+              posibilidade.push(elementMao);
+            }
+          });
+        });
+      }
+
       return posibilidade;
     },
     escolhaInicio() {
@@ -234,50 +376,111 @@ export const usePecasStore = defineStore("pecas", {
       });
       return resultado;
     },
-    escolhaIA(numeros,pecasjogo,pecasJogadas) {
+    adicionarPeca(peca, jogador) {
+      if (jogador == 1) {
+        this.PecasMaoJogador1.push(peca);
+      } else if (jogador == 2) {
+        this.PecasMaoJogador2.push(peca);
+      } else if (jogador == 3) {
+        this.PecasMaoJogador3.push(peca);
+      } else if (jogador == 0) {
+        this.PecasMaoIA.push(peca);
+      }
+      this.PecasCompra.splice(this.PecasCompra.indexOf(peca), 1);
+    },
+    escolhaIA(numeros) {
+      console.log("Ia");
       const Fuzzy = useFuzzy();
-     // let pecasPossiveis = this.posives(numeros, this.PecasMaoIA);
-      let pecasPossiveis = this.posives(numeros, pecasjogo);
-      //console.log(pecasPossiveis);
-      let resposta;
+      let pecasPossiveis = this.posives(numeros, this.PecasMaoIA);
+      let resposta = null;
       let valor = 0;
-      pecasPossiveis.forEach((element) => {
-        numeros.forEach((nm) => {
-          const peca = this.ConsultaValor(element);
-          if (peca.L1 == nm) {
-            let vl = this.tamanhoPeca(element);
-            let pI = this.quantidadePecasIguais(pecasjogo, nm);
-            // let pI = this.quantidadePecasIguais(this.PecasMaoIA, nm);
-            let pj = this.quantidadePecasIguais(pecasJogadas, nm);
-            console.log(pj, pecasJogadas)
-            // let pj = this.quantidadePecasIguais(this.PecasJogadas, nm);
-            let teste = Fuzzy.regras(pI, vl, pj);
-            if (valor < teste) {
-              valor = teste;
-              resposta = element;
+      if (numeros.length == 0) {
+        resposta = pecasPossiveis[0];
+      } else {
+        pecasPossiveis.forEach((element) => {
+          numeros.forEach((nm) => {
+            const peca = this.ConsultaValor(element);
+            if (peca.L1 == nm) {
+              let vl = this.tamanhoPeca(element);
+              let pI = this.quantidadePecasIguais(this.PecasMaoIA, nm);
+              let pj = this.quantidadePecasIguais(this.PecasJogadas, nm);
+              let teste = Fuzzy.regras(pI, vl, pj);
+              if (valor < teste) {
+                valor = teste;
+                resposta = element;
+              }
             }
-          }
-          if (peca.L2 == nm) {
-            let vl = this.tamanhoPeca(element);
-            let pI = this.quantidadePecasIguais(pecasjogo, nm);
-            //let pI = this.quantidadePecasIguais(this.PecasMaoIA, nm);
-            let pj = this.quantidadePecasIguais(pecasJogadas, nm);
-            // let pj = this.quantidadePecasIguais(this.PecasJogadas, nm);
-            let teste = Fuzzy.regras(pI, vl, pj);
-            if (valor < teste) {
-              valor = teste;
-              resposta = element;
+            if (peca.L2 == nm) {
+              let vl = this.tamanhoPeca(element);
+              let pI = this.quantidadePecasIguais(this.PecasMaoIA, nm);
+              let pj = this.quantidadePecasIguais(this.PecasJogadas, nm);
+              let teste = Fuzzy.regras(pI, vl, pj);
+              if (valor < teste) {
+                valor = teste;
+                resposta = element;
+              }
+            }
+          });
+        });
+      }
+
+      if (resposta != null) {
+        return resposta;
+      } else {
+        // comprar uma peça
+        const Posicoes = this.getPecasCompra;
+        let encontrar = false;
+        while (this.PecasCompra.length > 0 && !encontrar) {
+          const randomIndex =
+            Posicoes[Math.floor(Math.random() * Posicoes.length)];
+          console.log("fff",randomIndex)
+          this.adicionarPeca(randomIndex, 0);
+
+          const peca = this.ConsultaValor(randomIndex);
+          this.numerospossiveis.forEach((element) => {
+            if (element == peca.L1 || element == peca.L2) {
+              resposta = randomIndex;
+              encontrar = true;
+            }
+          });
+        }
+      }
+      if (this.PecasCompra.length == 0 && resposta == null) {
+        return -1;
+      }
+      return resposta;
+    },
+    checarnumeropossivel(valorJogado) {
+      const peca = this.ConsultaValor(valorJogado);
+      console.log("pecajogada", this.PecasJogadas);
+
+      if (this.PecasJogadas.length == 0) {
+        this.numerospossiveis.push(peca.L1);
+        this.numerospossiveis.push(peca.L2);
+      } else {
+        const numeros = this.numerospossiveis;
+        let test = false;
+        numeros.forEach((element) => {
+          if (test == false) {
+            console.log("f", element);
+            if (element == peca.L1) {
+              this.numerospossiveis.splice(
+                this.numerospossiveis.indexOf(element),
+                1
+              );
+              this.numerospossiveis.push(peca.L2);
+              test = true;
+            } else if (element == peca.L2) {
+              this.numerospossiveis.splice(
+                this.numerospossiveis.indexOf(element),
+                1
+              );
+              this.numerospossiveis.push(peca.L1);
+              test = true;
             }
           }
         });
-      });
-      console.log(resposta);
-      return resposta
-      // if (resposta != null){
-      //   this.jogarPeca(resposta);
-      // }else{
-      //   proximojogar()
-      // }
+      }
     },
   },
   getters: {

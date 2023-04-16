@@ -6,21 +6,21 @@ export const useFuzzy = defineStore("fuzzy", () => {
 
   function PecaIgual(x) {
     if (x < 0 || x > 6) {
-      return NaN;
+      return 0;
     } else {
       return x / 6;
     }
   }
   function ValorAlto(x) {
     if (x < 0 || x > 12) {
-      return NaN;
+      return 0;
     } else {
       return x / 12;
     }
   }
   function PecaEmjogo(x) {
     if (x < 0 || x > 5) {
-      return NaN;
+      return 0;
     } else {
       return x / 5;
     }
@@ -32,7 +32,6 @@ export const useFuzzy = defineStore("fuzzy", () => {
   // PecaEmjogo= (0 até 5)
   function regras(PecaIgual, ValorAlto, PecaEmjogo) {
     var resultado = {};
-
     if (PecaIgual === NaN || ValorAlto === NaN || PecaEmjogo === NaN) {
       resultado = NaN;
     } else if (
