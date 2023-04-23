@@ -406,10 +406,10 @@ export default defineComponent({
 }
 
 .body {
-    background-image: url("src/assets/img/fundo_palmeiras.jpeg");
+    background-image: url("src/assets/img/fundo_palmeiras.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center 100%;
     display: flex;
 }
 
