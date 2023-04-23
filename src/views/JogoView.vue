@@ -19,39 +19,53 @@
             </div>
 
 
+
+            <!--------------------- BTNs----------------------------------- -->
+
+
             <div class="divbotao">
-                <button class="botaomenu" @click="ativarMenu()">Menu</button>
+                <button class="botaomenu" @click="ativarMenu()">Menu Inicial</button>
             </div>
 
-            <div class="topo">
-                <div
-                    style=" width: 25%; height: 100%; justify-content: center; align-items: center; display: flex; color: black;">
 
+            <!--------------------- Sobre o jogador e IA----------------------------------- -->
+
+            <div class="SobreIA">
+                <div class="perfil">
+                    <div class="imgpersonagem"></div>
+                    <h3>{{ Algoritmo.PontosIA }} Pontos</h3>
                 </div>
-
-                <div style=" width: 50%; height: 100%; justify-content: center; align-items: center; display: flex;">
-                    <div class="caixa">
-                        <div v-for="item in Algoritmo.getPecasMaoIA" :key="item" style="margin-right: 5px;">
-                            <Peca Tamanho="45px" :Valor="item" :Virada="true"></Peca>
-                        </div>
-                    </div>
-                    <div class="SobreIA">
-                        <div class="perfil">
-                            <div class="imgpersonagem"></div>
-                            <h3>Pontos {{ Algoritmo.PontosIA }}</h3>
-                        </div>
-                        <div>
-                            <h2>Robson</h2>
-                        </div>
-                    </div>
-
+                <div style="margin: 0 auto; padding-bottom: 30px;">
+                    <h2>Robson</h2>
                 </div>
-                <div class="NumeroRodadas">
+            </div>
+
+            <div class="SobreJogaodor">
+                <div class="perfil">
+                    <div class="imgJogador"></div>
+                    <h3>{{ Algoritmo.PontosJog1 }} Pontos</h3>
+                </div>
+                <div style="margin: 0 auto; padding-bottom: 30px;">
+                    <h2>Jogador</h2>
+                </div>
+            </div>
+
+            <!--------------------- Rodada----------------------------------- -->
+            <div class="NumeroRodadas">
                     <h1>Rodada {{ Algoritmo.NumeroRodadas }}</h1>
                 </div>
-
+            <!--------------------- Caixa do topo----------------------------------- -->
+            <div class="topo">
+                <div style=" width: 100%; height: 100%; justify-content: center; align-items: center; display: flex;">
+                    <div class="caixa">
+                        <div v-for="item in Algoritmo.getPecasMaoIA" :key="item" style="margin-right: 5px;">
+                            <Peca Tamanho="35px" :Valor="item" :Virada="true"></Peca>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!--------------------- Mesa----------------------------------- -->
             <div class="mesa"
                 style="color: black; justify-content: center; align-items: center; margin: 0 auto; display: flex; font-size: 30px;">
                 <div class="montecompra">
@@ -64,39 +78,29 @@
                 <!-- <h1>{{ Algoritmo.numerospossiveis }}</h1> -->
             </div>
 
+            <!--------------------- Caixa do jogaodr----------------------------------- -->
             <div class="embaixo">
+
                 <div
-                    style=" width: 25%; height: 100%; justify-content: center; align-items: center; display: flex; color: black;">
+                    style=" width: 100%; height: 100%; justify-content: center; align-items: center; display: inline-flex; ">
 
-                </div>
-                <div style=" width: 60%; height: 100%; justify-content: center; align-items: center; display: flex;">
-
+                    <div class="Divbtncomprar" v-show="btncomp">
+                        <button class="btncomprar" @click="ativarcomprar()">Comprar</button>
+                    </div>
                     <div class="caixa">
                         <div v-for="item in Algoritmo.getPecasMaoJogador1" :key="item" style="margin-right: 5px;"
                             @click="checarvalor(item)">
                             <div class="bloquearpeca"
                                 v-show="Algoritmo.posives(Algoritmo.numerospossiveis, Algoritmo.getPecasMaoJogador1).indexOf(item) == -1 || Algoritmo.VezJogador != 1">
                             </div>
-                            <Peca Tamanho="45px" :Valor="item" :Virada="false"></Peca>
+                            <Peca Tamanho="35px" :Valor="item" :Virada="false"></Peca>
                         </div>
-                    </div>
-                    <div class="Divbtncomprar" v-show="btncomp">
-                        <button class="btncomprar" @click="ativarcomprar()">Comprar</button>
-                    </div>
-                    <div class="SobreJogaodor">
-                        <div class="perfil">
-                            <div class="imgJogador"></div>
-                            <h3>Pontos {{ Algoritmo.PontosJog1 }}</h3>
-                        </div>
-                        <div>
-                            <h2>Jogador</h2>
-                        </div>
+
+
                     </div>
                 </div>
-
-
-
             </div>
+            <!-------------------------------------------------------- -->
 
         </div>
     </div>
@@ -185,12 +189,12 @@ export default defineComponent({
 
         }
         function reset() {
-             possiveis.value = [];
-             precisacomprar.value  = false;
-             liberado.value  = false;
-             menu.value  = false;
-             btncomp.value  = false;
-             PecaJogada.value  = 'Reset';
+            possiveis.value = [];
+            precisacomprar.value = false;
+            liberado.value = false;
+            menu.value = false;
+            btncomp.value = false;
+            PecaJogada.value = 'Reset';
         }
 
         function checarfim() {
@@ -262,6 +266,10 @@ export default defineComponent({
                 if (checarfim() == -1) {
                     jogadorJogar()
                 }
+                if(Algoritmo.getPecasCompra.length == 0 && Algoritmo.posives(Algoritmo.numerospossiveis, Algoritmo.PecasMaoIA).length ==0){
+                    jogadorJogar()
+
+                }
 
             }, 3000);
 
@@ -274,6 +282,9 @@ export default defineComponent({
                 if (possiveis == 0 || possiveis == null) {
                     if (Algoritmo.PecasCompra.length == 0) {
                         if (checarfim() == -1) {
+                            IaJogar()
+                        }
+                        if(Algoritmo.posives(Algoritmo.numerospossiveis, Algoritmo.PecasMaoJogador1).length ==0){
                             IaJogar()
                         }
                     } else {
@@ -306,7 +317,7 @@ export default defineComponent({
                     PecaJogada.value = data
                     Algoritmo.jogarPeca(data)
                 }
-                console.log(checarfim(), "CHECAR IA FIM")
+                console.log(checarfim(), "CHECAR Jogador FIM")
                 if (checarfim() == -1) {
                     IaJogar()
                 }
@@ -365,19 +376,41 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.robo {
+    width: 2vw;
+    height: 4vh;
+    background-color: white;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.jogador {
+    width: 8vw;
+    height: 5vh;
+    text-align: left;
+    margin-left: 0.5vw;
+    margin-top: -0.7vh;
+}
+
+.nav_1 {
+    width: max-content;
+    height: max-content;
+    top: 0;
+    left: 0;
+    text-align: center;
+    display: flex;
+    position: absolute;
+    z-index: 30;
+}
+
 .body {
     background-image: url("src/assets/img/fundo_palmeiras.jpeg");
     background-size: cover;
-    background-position: center;
-    padding: 0;
-    border: 0;
-    display: block;
-    width: 100%;
-    min-height: 100vh;
-    max-height: 100%;
     background-repeat: no-repeat;
-    justify-content: center;
-    align-items: center;
+    background-position: center;
+    display: flex;
 }
 
 .principal {
@@ -393,29 +426,32 @@ export default defineComponent({
 }
 
 .caixa {
-    background-color: #376272;
-    border: 5px black solid;
+    background-image: url('../assets/img/teste.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-color: #376272;
+    border: 5px black solid; */
     min-width: 500px;
     max-width: max-content;
-    padding-left: 20px;
-    padding-right: 15px;
-
+    padding-left: 30px;
+    padding-right: 28px;
     height: max-content;
     margin: 0 auto;
     justify-content: center;
     align-items: center;
     border-radius: 30px;
     display: flex;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 55px;
+    padding-bottom: 55px;
 
 }
 
 .bloquearpeca {
     z-index: 30;
-    width: 50px;
-    height: 100px;
-    background-color: #1e1e1ed3;
+    width: 44px;
+    height: 82px;
+    background-color: #1e1e1e9c;
     display: flex;
     position: absolute;
     margin: 0 auto;
@@ -464,10 +500,11 @@ export default defineComponent({
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    width: 70%;
-    height: 70%;
+    width: 85%;
+    height: 75%;
     margin: 0 auto;
-    border-radius: 50px;
+    border-radius: 20px;
+    
 }
 
 
@@ -536,44 +573,36 @@ export default defineComponent({
 .Divbtncomprar {
     position: absolute;
     bottom: 0;
-    left: -20px;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
-    margin-left: 2%;
-    margin-bottom: 2%;
+    margin-left: 0%;
+    margin-bottom: 10%;
     z-index: 30;
 }
 
 .botaomenu {
-    background-color: #AB1A22;
-    width: 200px;
-    height: 60px;
+    width: max-content;
+    height: 6vh;
+    background-color: #0A7F55;
     font-family: 'Handjet', sans-serif;
-    font-size: 3rem;
+    color: white;
+    font-size: 1.6rem;
     border-radius: 30px;
-    text-align: center;
-    border: 2px solid rgb(92, 92, 92);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    margin-left: 2%;
-
+    border: white 1px solid;
 }
 
 .btncomprar {
-    background-color: #15198dd4;
     width: max-content;
-    height: 50px;
+    height: 6vh;
+    background-color: #1A31AB;
     font-family: 'Handjet', sans-serif;
-    font-size: 2rem;
+    color: white;
+    font-size: 1.6rem;
     border-radius: 30px;
-    text-align: center;
-    border: 2px solid rgb(92, 92, 92);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
+    border: white 1px solid;
     padding-left: 10px;
     padding-right: 10px;
-
 
 }
 
@@ -583,10 +612,10 @@ export default defineComponent({
     position: absolute;
     font-weight: bold;
     font-family: 'Handjet', sans-serif;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     color: white;
-    right: 10%;
-    top: 15%;
+    right: 5%;
+    top: 5%;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -596,8 +625,8 @@ export default defineComponent({
 
 .SobreIA {
     position: absolute;
-    top: 10px;
-    left: -30px;
+    top: 15px;
+    left: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -606,16 +635,15 @@ export default defineComponent({
     z-index: 30;
     width: max-content;
     height: max-content;
-    font-weight: bold;
     font-family: 'Handjet', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: white;
 }
 
 .SobreJogaodor {
-    position: relative;
-    bottom: -30px;
-    right: 15%;
+    position: absolute;
+    bottom: -25px;
+    right: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -626,7 +654,7 @@ export default defineComponent({
     height: max-content;
     font-weight: bold;
     font-family: 'Handjet', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: white;
 
     text-align: center;
@@ -639,31 +667,28 @@ export default defineComponent({
 }
 
 .imgpersonagem {
-    background-color: #D9D9D9;
+    background-color: #fff;
     background-image: url('src/assets/img/robson.svg');
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin: 0 auto;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 60%;
     background-position: center;
     display: flex;
-    border: 5px solid #D9D9D9;
 
 }
 
 .imgJogador {
-    background-color: #D9D9D9;
+    background-color: #fff;
     background-image: url('src/assets/img/jogador.svg');
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin: 0 auto;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 80%;
     background-position: center;
-    border: 5px solid #D9D9D9;
     display: flex;
-}
-</style>
+}</style>

@@ -1,12 +1,24 @@
 @import "./base.css";
-@import url('https://fonts.cdnfonts.com/css/handjet-2');
+/* @import url('https://fonts.cdnfonts.com/css/handjet-2'); */
+@font-face {
+  font-family: 'Handjet';
+  src: url('font/VT323-Regular.ttf');
+}
+@font-face {
+  font-family: 'Silkscreen-Bold';
+  src: url('font/Silkscreen-Bold.ttf');
+}
+@font-face {
+  font-family: 'Silkscreen-Regular';
+  src: url('font/Silkscreen-Regular.ttf');
+}
 
 #app {
     min-width:  320px;
     background-color: #1E1E1E;
     margin: 0 auto;
     padding: 0;
-    font-family: "Ruda", sans-serif;
+    font-family: 'VT323', sans-serif;
     font-weight: normal;
   }
 

@@ -1,12 +1,49 @@
 <template>
-    <div class="contorno">
-        <div v-for="item in pecasjogadas" :key="item" style="margin-right: 5px;">
-            <div class="rodar"
-                v-bind:style="{ transform: item.valuePosicao, 'margin-right': item.marginLeft, 'margin-left': item.marginRight }">
-                <Peca Tamanho="40px" :Valor="item.value" :Virada="false"></Peca>
+    
+    <div class="mesa">
+
+        <div class="contorno2 linha5" style="transform: rotate(180deg);">
+        <div v-for="item in pecasjogadas5" :key="item" style="margin-right: 5px;">
+            <div class="rodar ">
+                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
             </div>
         </div>
     </div>
+        <div class="contorno linha3" style="transform: rotate(90deg);">
+        <div v-for="item in pecasjogadas3" :key="item" style="margin-right: 5px;">
+            <div class="rodar ">
+                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+            </div>
+        </div>
+    </div>
+    <div class="contorno linha1">
+        <div v-for="item in pecasjogadas1" :key="item" style="margin-right: 5px;">
+            <div class="rodar ">
+                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="contorno linha2" style="transform: rotate(90deg);">
+        <div v-for="item in pecasjogadas2" :key="item" style="margin-right: 5px;">
+            <div class="rodar ">
+                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="contorno2 linha4" style="transform: rotate(180deg);">
+        <div v-for="item in pecasjogadas4" :key="item" style="margin-right: 5px;">
+            <div class="rodar ">
+                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
 </template>
   
 <script>
@@ -25,7 +62,12 @@ export default defineComponent({
         const Algoritmo = usePecasStore();
         const comeco = ref(-1);
         const fim = ref(-1);
-        const pecasjogadas = ref([]);
+        const pecasjogadas1 = ref([]);
+        const pecasjogadas2 = ref([]);
+        const pecasjogadas3 = ref([]);
+        const pecasjogadas4 = ref([]);
+        const pecasjogadas5 = ref([]);
+
         const sentido = ref('');
         onMounted(() => {
 
@@ -39,8 +81,13 @@ export default defineComponent({
             if (valor === 'Reset') {
                 comeco.value  = -1;
                 fim.value  = -1;
-                pecasjogadas.value  = [];
                 sentido.value  = '';
+                pecasjogadas1.value = [];
+                pecasjogadas2.value = [];
+                pecasjogadas3.value = [];
+                pecasjogadas4.value = [];
+                pecasjogadas5.value = [];
+
                 return
             }
 
@@ -50,49 +97,49 @@ export default defineComponent({
             }
             const valores = Algoritmo.ConsultaValor(valor);
             const obj = {};
-            console.log("comeco", comeco.value, "fim", fim.value, "val", valores)
             if (comeco.value == -1 || fim.value == -1) {
                 comeco.value = valores.L1;
                 fim.value = valores.L2;
                 if (valor == 'I28' || valor == 'I21' || valor == 'I15' || valor == 'I10' || valor == '6' || valor == 'I3' || valor == 'I1') {
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(0deg)';
-                    obj.marginRight = '5px'
-                    obj.marginLeft = '5px'
 
                 } else {
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(-90deg)';
-                    obj.marginRight = '5px'
-                    obj.marginLeft = '28px'
 
                 }
-                pecasjogadas.value.push(obj);
+                pecasjogadas1.value.push(obj);
             }
             else if (valores.L1 == comeco.value || valores.L2 == comeco.value) {
                 if (valores.L1 == comeco.value && valores.L2 == comeco.value) {
                     comeco.value = valores.L1;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(0deg)';
-                    obj.marginRight = '0px'
-                    obj.marginLeft = '0px'
+
+
                 }
                 else if (valores.L1 == comeco.value) {
                     comeco.value = valores.L2;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(90deg)';
-                    obj.marginRight = '28px'
-                    obj.marginLeft = '5px'
+
                 } else {
                     comeco.value = valores.L1;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(-90deg)';
-                    obj.marginRight = '5px'
-                    obj.marginLeft = '28px'
-                }
-                console.log("comeco")
 
-                pecasjogadas.value.unshift(obj);
+
+                }
+                if (pecasjogadas1.value.length < 12) {
+                    pecasjogadas1.value.unshift(obj);
+
+                }else if(pecasjogadas3.value.length < 2){
+                    pecasjogadas3.value.unshift(obj);
+
+                }else{
+                    pecasjogadas5.value.unshift(obj);
+                }
 
             }
             else {
@@ -100,31 +147,32 @@ export default defineComponent({
                     fim.value = valores.L1;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(0deg)';
-                    obj.marginRight = '0px'
-                    obj.marginLeft = '0px'
-
                 }
                 else if (valores.L1 == fim.value) {
                     fim.value = valores.L2;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(-90deg)';
-                    obj.marginRight = '5px'
-                    obj.marginLeft = '25px'
+
 
                 } else {
                     fim.value = valores.L1;
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(90deg)';
-                    obj.marginRight = '25px'
-                    obj.marginLeft = '5px'
-                }
-                console.log("fim")
 
-                pecasjogadas.value.push(obj);
+                }
+                if (pecasjogadas1.value.length < 12) {
+                    pecasjogadas1.value.push(obj);
+
+                }else if(pecasjogadas2.value.length < 2){
+                    pecasjogadas2.value.push(obj);
+
+                }else{
+                    pecasjogadas4.value.push(obj);
+                }
+
             }
             pecacolocando.play();
 
-            console.log(pecasjogadas.value)
         }
 
         return {
@@ -132,7 +180,11 @@ export default defineComponent({
             Algoritmo,
             comeco,
             fim,
-            pecasjogadas,
+            pecasjogadas1,
+            pecasjogadas2,
+            pecasjogadas3,
+            pecasjogadas4,
+            pecasjogadas5,
             organizarpeca,
             sentido,
 
@@ -145,6 +197,32 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.mesa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.linha1{
+    
+}
+.linha4{
+  right: 18%;
+
+}
+.linha5{
+    top: -33%;
+  left: 18%;
+
+}
+.linha2{
+    right: 90px;
+    top:  89px;
+}
+.linha3{
+    right: -86px;
+    top:  -89px;
+}
 .contorno {
     min-width: 30px;
     min-height: 30px;
@@ -156,12 +234,25 @@ export default defineComponent({
     flex-wrap: wrap;
     border-radius: 10px;
 }
+.contorno2 {
+    min-width: 30px;
+    min-height: 30px;
+    position: absolute;
+    max-width: max-content;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    bottom: 30px;
+}
 
 .rodar {
-    display: inline-flex;
-    margin: 0 auto;
-    padding: auto;
+    display: flex;
     position: relative;
+    align-items: center;
+    justify-content: center;
     transform-style: preserve-3d;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
-    <div class="rotated">
-    <div class="contorno ">
+    <div class="contorno rotacao">
         <div class="lado1">
 
             <div class="linha" v-show="!Virada">
@@ -73,7 +72,6 @@
             </div>
         </div>
     </div>
-    </div>
 </template>
   
 <script>
@@ -82,7 +80,7 @@ import { usePecasStore } from "../stores/PecasStores"
 
 export default defineComponent({
     name: 'Peca',
-    props: { Tamanho: String, Valor: String, Virada: Boolean, Sentido: String },
+    props: { Tamanho: String, Valor: String, Virada: Boolean, Rotacionar: String },
 
 
     setup(props) {
@@ -91,6 +89,10 @@ export default defineComponent({
         const L1 = ref(0);
         const L2 = ref(0);
 
+        const Rotacao = ref('rotate(0deg)');
+
+        const marginleft = ref('0px');
+        const marginright = ref('0px');
 
         onMounted(() => {
 
@@ -99,17 +101,27 @@ export default defineComponent({
             L1.value = valores.L1;
             L2.value = valores.L2;
 
-            switch (props.Sentido) {
-                case 'Vertical':
+            switch (props.Rotacionar) {
+                case 'rotate(0deg)':
+                    Rotacao.value = 'rotate(0deg)';
+                    marginright.value = '-2px'
+                    marginleft.value = '-2px'
+                    break;
+                case 'rotate(90deg)':
+                    Rotacao.value = 'rotate(90deg)';
+                    marginright.value = '12px'
+                    marginleft.value = '12px'
 
                     break;
-                case 'Direita':
-
-                    break;
-                case 'Esquerda':
-
+                case 'rotate(-90deg)':
+                    Rotacao.value = 'rotate(-90deg)';
+                    marginright.value = '12px'
+                    marginleft.value = '12px'
                     break;
                 default:
+                    Rotacao.value = 'rotate(0deg)';
+                    marginright.value = '0px'
+                    marginleft.value = '0px'
                     break;
             }
 
@@ -121,7 +133,11 @@ export default defineComponent({
 
             Algoritmo,
             L1,
-            L2
+            L2,
+            Rotacao,
+            marginright,
+            marginleft
+
         }
     }
 
@@ -131,7 +147,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.rotacao {
+    transform: v-bind(Rotacao);
+    margin-left:v-bind(marginright);
+    margin-right: v-bind(marginleft);
+}
 
 .contorno {
     background-color: #F6F6F6;
@@ -198,5 +218,4 @@ export default defineComponent({
     height: 70%;
     background-color: #64B1CE;
 }
-
 </style>
