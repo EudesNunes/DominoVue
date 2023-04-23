@@ -1,27 +1,27 @@
 <template>
     <div class="contorno">
         <div class="titulo">
-            <h1 style="font-size: 6em;color: black;font-family: Handjet, sans-serif;"> {{ Titulo }} </h1>
+            <h1 style="font-size: 6em;color: white;font-family: Handjet, sans-serif;"> {{ Titulo }} </h1>
         </div>
         <div class="msg">
             <p style="font-size: 4em; font-family: Handjet, sans-serif; " class="mens"> {{ Mensagem }}
             </p>
         </div>
         <div class="msg">
-            <p style="font-size: 4em;color: black; font-family: Handjet, sans-serif;">Selecione uma Opção:</p>
+            <p style="font-size: 4em;color: white; font-family: Handjet, sans-serif;">Selecione uma opção:</p>
         </div>
         <div class="btns">
             <div class="continuar" v-show="Tipo == 'menu'">
-                <button class="botao" style="background-color: #1A9AAB;" @click="$emit('continuarJogo')">Continuar</button>
+                <button class="botao" style="background-color: #1A9AAB; color: white;border: white 2px solid;" @click="$emit('continuarJogo')">Continuar</button>
             </div>
             <div class="rodada" v-show="Tipo == 'rodada'">
-                <button class="botao" style="background-color: #1A9AAB;" @click="$emit('proximaRodada')">Proxima Rodada</button>
+                <button class="botao" style="background-color: #1A9AAB; color: white;border: white 2px solid;" @click="$emit('proximaRodada')">Próxima Rodada</button>
             </div>
             <div class="novo" v-show="Tipo == 'menu' || Tipo == 'fim'">
-                <button class="botao" style="background-color: #0A7F55;" @click="novojogo()">Novo Jogo</button>
+                <button class="botao" style="background-color: #0A7F55; color: white;border: white 2px solid;" @click="novojogo()">Novo Jogo</button>
             </div>
             <div class="sair" v-show="Tipo == 'menu' || Tipo == 'fim' || Tipo == 'rodada'"><button class="botao"
-                    style="background-color: #AB1A22;" @click="sair()">Menu inicial</button></div>
+                    style="background-color: #E6DF37; color: white; border: white 2px solid;" @click="sair()">Menu inicial</button></div>
 
 
 
@@ -72,10 +72,11 @@ export default defineComponent({
 
 <style scoped>
 .contorno {
-    background-color: #6598A8;
+    background-color: #4b575be3;
     min-width: 50%;
     min-height: 70%;
     margin: 0 auto;
+    color: white;
     display: inline-flex;
     position: relative;
     border: 5px black solid;
@@ -114,6 +115,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     text-align: center;
+    color: white;
 }
 
 .botao {
@@ -129,7 +131,6 @@ export default defineComponent({
     padding-left: 10px;
     padding-right: 10px;
     margin-left: 10%;
-
 }
 
 .sair {

@@ -213,7 +213,7 @@ export default defineComponent({
 
                     }
                     fimrodada.value = true;
-                    MenMenu.value = `Empate na Rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
+                    MenMenu.value = `Empate na rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
                     CorMenu.value = "Yellow"
                     reset()
                     return -2
@@ -221,13 +221,13 @@ export default defineComponent({
                 case 0:
                     if (gnJogo == 0) {
                         fimpartida.value = true;
-                        MenMenu.value = `Você Perdeu!! IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
+                        MenMenu.value = `Você perdeu!! IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
                         CorMenu.value = "Red"
                         reset()
                         return 0
                     }
                     fimrodada.value = true;
-                    MenMenu.value = `Você Perdeu a Rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
+                    MenMenu.value = `Você perdeu a rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
                     CorMenu.value = "Red"
                     reset()
                     return 0
@@ -235,13 +235,13 @@ export default defineComponent({
                 case 1:
                     if (gnJogo == 1) {
                         fimpartida.value = true;
-                        MenMenu.value = `Você Ganhou!! IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
+                        MenMenu.value = `Você ganhou!! IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
                         CorMenu.value = "green"
                         reset()
                         return 1
                     }
                     fimrodada.value = true;
-                    MenMenu.value = `Você Ganhou a Rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
+                    MenMenu.value = `Você ganhou a rodada. IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
                     CorMenu.value = "green"
                     reset()
                     return 1

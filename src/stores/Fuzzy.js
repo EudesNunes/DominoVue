@@ -11,6 +11,19 @@ export const useFuzzy = defineStore("fuzzy", () => {
       return x / 6;
     }
   }
+  function PecaUnica(x){
+      if(x == 6){
+        return 3
+      }
+      else if(x == 5){
+        return 2
+      }
+      else if(x == 4){
+        return 1
+      }else{
+        return 0
+      }
+  }
   function ValorAlto(x) {
     if (x < 0 || x > 12) {
       return 0;
