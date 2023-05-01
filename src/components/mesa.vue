@@ -100,7 +100,7 @@ export default defineComponent({
             if (comeco.value == -1 || fim.value == -1) {
                 comeco.value = valores.L1;
                 fim.value = valores.L2;
-                if (valor == 'I28' || valor == 'I21' || valor == 'I15' || valor == 'I10' || valor == '6' || valor == 'I3' || valor == 'I1') {
+                if (valor == 'I28' || valor == 'I21' || valor == 'I15' || valor == 'I10' || valor == 'I6' || valor == 'I3' || valor == 'I1') {
                     obj.value = valor;
                     obj.valuePosicao = 'rotate(0deg)';
 

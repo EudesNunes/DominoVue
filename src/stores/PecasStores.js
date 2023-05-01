@@ -47,7 +47,7 @@ export const usePecasStore = defineStore("pecas", {
     PontosJog1: 0,
     PontosJog2: 0,
     PontosJog3: 0,
-    NumeroRodadas:0,
+    NumeroRodadas: 0,
   }),
   actions: {
     $reset(tipo) {
@@ -63,7 +63,7 @@ export const usePecasStore = defineStore("pecas", {
           this.PecasJogadas = [];
           this.numerospossiveis = [];
           break;
-      
+
         default:
           this.PecasCompra = {};
           this.PecasMaoIA = {};
@@ -82,7 +82,6 @@ export const usePecasStore = defineStore("pecas", {
           this.NumeroRodadas = 0;
           break;
       }
-
     },
     jogarPeca(peca) {
       this.checarnumeropossivel(peca);
@@ -111,55 +110,55 @@ export const usePecasStore = defineStore("pecas", {
           break;
       }
     },
-    checarGanhador() {
-      //-2 = empate
-      //-1 = ninguem ganhou
-      //0 = IA ganhou
-      //1 = Jd1 ganhou
-      if (this.PontosIA > 50 && this.PontosJog1 == this.PontosIA) {
-        return -2;
-      }
-      else if (this.PontosIA > 50 && this.PontosJog1 < this.PontosIA) {
-        return 0;
-      } else if (this.PontosJog > 50) {
-        return 1;
-      }
-        return -1;
- 
-    },
+  
     ChecarGanhadorRodada() {
       //-2 = empate
       //-1 = ninguem ganhou
       //0 = IA ganhou
       //1 = Jd1 ganhou
+      //10 fim ganha ia
+      //11 fim ganha JOG1
 
       if (this.PecasMaoIA.length == 0) {
         this.PecasMaoJogador1.forEach((element) => {
           this.PontosIA += this.tamanhoPeca(element);
+          if(this.PontosIA.length >= 50){
+            return 10
+          }
         });
-       
+
         return 0;
       } else if (this.PecasMaoJogador1.length == 0) {
         this.PecasMaoIA.forEach((element) => {
           this.PontosJog1 += this.tamanhoPeca(element);
-        });
-       
-        return 1;
-      }else if(this.PecasCompra.length == 0){
-          if(this.posives(this.numerospossiveis, this.PecasMaoJogador1).length == 0 && this.posives(this.numerospossiveis, this.PecasMaoIA).length == 0 ){
-            this.PecasMaoIA.forEach((element) => {
-              this.PontosJog1 += this.tamanhoPeca(element);
-            });
-            this.PecasMaoJogador1.forEach((element) => {
-              this.PontosIA += this.tamanhoPeca(element);
-            }); 
-            return -2;
+          if(this.PontosIA.length >= 50){
+            return 11
           }
+        });
+        return 1;
+      } else if (this.PecasCompra.length == 0) {
+        this.PontosJog1 += this.tamanhoPeca(element);
+        this.PontosIA += this.tamanhoPeca(element);
+        this.numerospossiveis.forEach((element) => {
+          if (this.quantidadePecasIguais(this.PecasJogadas, element) != 7) {
+            return -1;
+          }
+        });
+        if(this.PontosIA.length >= 50 && (this.PontosIA.length == this.PecasMaoJogador1.length)){
+          return -20
+        }else if(this.PontosIA.length >= 50 && this.PontosIA.length > this.PecasMaoJogador1.length){
+          return 10
         }
-    
-        return -1
+        else if(this.PecasMaoJogador1.length >= 50 && this.PontosIA.length < this.PecasMaoJogador1.length ){
+          return 11
+        }else{
+          return -2;
+        }
+      }
 
+      return -1;
     },
+
     maoPecas(state, getters) {
       const Posicoes = this.setPecasCompra;
       const pecasTotais = [];
@@ -215,7 +214,7 @@ export const usePecasStore = defineStore("pecas", {
     NovaRodada() {
       this.$reset(1);
       this.NumeroRodadas += 1;
-      const nJogadores = this.QuantidadeJogadores 
+      const nJogadores = this.QuantidadeJogadores;
       this.PecasMaoIA = this.maoPecas();
       switch (nJogadores) {
         case 1: {
@@ -248,6 +247,7 @@ export const usePecasStore = defineStore("pecas", {
     },
     posives(numeros, mao) {
       const posibilidade = [];
+      console.log('posives','numeros:', numeros, 'mao:',mao)
       if (numeros.length == 0) {
         let maior = 0;
         mao.forEach((elementMao) => {
@@ -389,7 +389,6 @@ export const usePecasStore = defineStore("pecas", {
       this.PecasCompra.splice(this.PecasCompra.indexOf(peca), 1);
     },
     escolhaIA(numeros) {
-      console.log("Ia");
       const Fuzzy = useFuzzy();
       let pecasPossiveis = this.posives(numeros, this.PecasMaoIA);
       let resposta = null;
@@ -429,30 +428,29 @@ export const usePecasStore = defineStore("pecas", {
       } else {
         // comprar uma peça
         const Posicoes = this.getPecasCompra;
-        let encontrar = false;
-        while (this.PecasCompra.length > 0 && !encontrar) {
+
+        while (this.PecasCompra.length > 0 && resposta == null) {
+
           const randomIndex =
             Posicoes[Math.floor(Math.random() * Posicoes.length)];
-          console.log("fff",randomIndex)
           this.adicionarPeca(randomIndex, 0);
 
           const peca = this.ConsultaValor(randomIndex);
+
           this.numerospossiveis.forEach((element) => {
             if (element == peca.L1 || element == peca.L2) {
               resposta = randomIndex;
-              encontrar = true;
             }
           });
         }
+        if (resposta == null) {
+          return -1;
+        }
+        return resposta;
       }
-      if (this.PecasCompra.length == 0 && resposta == null) {
-        return -1;
-      }
-      return resposta;
     },
     checarnumeropossivel(valorJogado) {
       const peca = this.ConsultaValor(valorJogado);
-      console.log("pecajogada", this.PecasJogadas);
 
       if (this.PecasJogadas.length == 0) {
         this.numerospossiveis.push(peca.L1);
@@ -461,25 +459,26 @@ export const usePecasStore = defineStore("pecas", {
         const numeros = this.numerospossiveis;
         let test = false;
         numeros.forEach((element) => {
+          console.log('entrada posives','element:', element,'peca.L1:', peca.L1,'peca.L2:', peca.L2)
+
           if (test == false) {
-            console.log("f", element);
             if (element == peca.L1) {
               this.numerospossiveis.splice(
                 this.numerospossiveis.indexOf(element),
-                1
+                1, peca.L2
               );
-              this.numerospossiveis.push(peca.L2);
               test = true;
             } else if (element == peca.L2) {
               this.numerospossiveis.splice(
                 this.numerospossiveis.indexOf(element),
-                1
+                1, peca.L1
               );
-              this.numerospossiveis.push(peca.L1);
               test = true;
             }
           }
         });
+        console.log('SAida posives','numerospossiveis:', this.numerospossiveis)
+
       }
     },
   },
