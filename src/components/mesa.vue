@@ -91,7 +91,7 @@ export default defineComponent({
                 return
             }
 
-            const pecacolocando = new Audio('src/assets/musicas/pecaDomino.m4a');
+            const pecacolocando = new Audio('/src/assets/musicas/pecaDomino.m4a');
             if (valor == '' || valor == null) {
                 return
             }
