@@ -435,7 +435,7 @@ export default defineComponent({
 }
 
 .body {
-  background-image: url("src/assets/img/fundo_palmeiras.jpg");
+  background-image: url("/src/assets/img/fundo_palmeiras.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center 100%;
@@ -507,7 +507,7 @@ export default defineComponent({
 }
 
 .montecompra {
-  background-image: url("src/assets/img/compra.png");
+  background-image: url("/src/assets/img/compra.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -522,7 +522,7 @@ export default defineComponent({
 }
 
 .mesa {
-  background-image: url("src/assets/img/mesa.png");
+  background-image: url("/src/assets/img/mesa.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -686,7 +686,7 @@ export default defineComponent({
 
 .imgpersonagem {
   background-color: #fff;
-  background-image: url("src/assets/img/robson.svg");
+  background-image: url("/src/assets/img/robson.svg");
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -699,7 +699,7 @@ export default defineComponent({
 
 .imgJogador {
   background-color: #fff;
-  background-image: url("src/assets/img/jogador.svg");
+  background-image: url("/src/assets/img/jogador.svg");
   width: 35px;
   height: 35px;
   border-radius: 50%;
