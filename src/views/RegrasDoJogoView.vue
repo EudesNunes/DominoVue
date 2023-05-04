@@ -59,7 +59,7 @@ export default defineComponent({
 
 <style scoped>
 .body {
-  background-image: url("src/assets/img/fundo_palmeiras.jpg");
+  background-image: url("/src/assets/img/fundo_palmeiras.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
