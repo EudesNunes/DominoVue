@@ -58,7 +58,7 @@
   
   <style scoped>
   .body {
-    background-image: url("src/assets/img/fundo_palmeiras.jpg");
+    background-image: url("/src/assets/img/fundo_palmeiras.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -160,7 +160,7 @@
     color: #ffffff;
   }
   .efeitoDomino{
-    background-image: url('src/assets/img/efeito-domino.svg');
+    background-image: url('/src/assets/img/efeito-domino.svg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
