@@ -7,7 +7,7 @@
 				</h1>
 			</div>
 			<div class="canto">
-				<img src="src/assets/img/univille1.png" class="univ" id="univ">
+				<img src="/src/assets/img/univille1.png" class="univ" id="univ">
 			</div>
 		</nav>
 		<div class="principal" id="principal">
@@ -55,7 +55,7 @@ export default defineComponent({
 
 <style scoped>
 .body {
-	background-image: url("src/assets/img/fundo_palmeiras.jpg");
+	background-image: url("/src/assets/img/fundo_palmeiras.jpg");
 	background-size: cover;
 	background-position: center 100%;
 	padding: 0;
@@ -72,7 +72,7 @@ nav {
 	color: #022E83;
 	width: 100%;
 	height: 110px;
-	background-image: url("src/assets/img/Rectangle5.png");
+	background-image: url("/src/assets/img/Rectangle5.png");
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
