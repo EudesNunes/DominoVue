@@ -1,258 +1,366 @@
 <template>
-    
-    <div class="mesa">
+  <div class="mesa">
+    <div class="caixa">
+      <div class="verticalE" id="LinhaEsquerda" ref="DivLinhaEsquerda">
+        <div class="contornoVeritical LinhaEsquerda">
+          <div
+            v-for="item in pecasjogadas2"
+            :key="item"
+            style="margin-right: 5px"
+          >
+            <div class="rodar">
+              <Peca
+                Tamanho="30px"
+                :Valor="item.value"
+                :Virada="false"
+                :Rotacionar="item.valuePosicao == 'rotate(0deg)' ? 'rotate(90deg)' : item.valuePosicao"
+                style="display: flex"
+                :style="{
+                  top:  '15px',
+                }"
+              ></Peca>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- --------------------------------------Linhas Horizontal-------------------------------------------  -->
+      <div class="horizontal">
+        <div
+          class="contornoHorizontal LinhaEmbaixo"
+          ref="DivLinhaBaixo"
+          :style="{
+            display:'flex',
+            left: `calc(100% - ${larguraDivBaixo}px - ${vezbaixo}px)`
+          }"
+        >
+          <div
+            v-for="item in pecasjogadas5"
+            :key="item"
+            style="margin-right: 5px"
+          >
+            <div class="rodar">
+              <Peca
+                Tamanho="30px"
+                :Valor="item.value"
+                :Virada="false"
+                :Rotacionar="item.valuePosicao"
+                :style="{
+                  top: '10px' ,
+                }"
+              ></Peca>
+            </div>
+          </div>
+        </div>
 
-        <div class="contorno2 linha5" style="transform: rotate(180deg);">
-        <div v-for="item in pecasjogadas5" :key="item" style="margin-right: 5px;">
-            <div class="rodar ">
-                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+        <div class="contornoHorizontal LinhaPrincipal">
+          <div
+            v-for="item in pecasjogadas1"
+            :key="item"
+            style="margin-right: 5px"
+          >
+            <div class="rodar">
+              <Peca
+                Tamanho="30px"
+                :Valor="item.value"
+                :Virada="false"
+                :Rotacionar="item.valuePosicao"
+              ></Peca>
             </div>
+          </div>
         </div>
-    </div>
-        <div class="contorno linha3" style="transform: rotate(90deg);">
-        <div v-for="item in pecasjogadas3" :key="item" style="margin-right: 5px;">
-            <div class="rodar ">
-                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
-            </div>
-        </div>
-    </div>
-    <div class="contorno linha1">
-        <div v-for="item in pecasjogadas1" :key="item" style="margin-right: 5px;">
-            <div class="rodar ">
-                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
-            </div>
-        </div>
-        
-    </div>
 
-    <div class="contorno linha2" style="transform: rotate(90deg);">
-        <div v-for="item in pecasjogadas2" :key="item" style="margin-right: 5px;">
-            <div class="rodar ">
-                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+        <div class="contornoHorizontal LinhaTopo">
+          <div
+            v-for="item in pecasjogadas4"
+            :key="item"
+            style="margin-right: 5px"
+          >
+            <div class="rodar">
+              <Peca
+                Tamanho="30px"
+                :Valor="item.value"
+                :Virada="false"
+                :Rotacionar="item.valuePosicao"
+                :style="{
+                  bottom: '12px',
+                }"
+              ></Peca>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
+      <!-- --------------------------------------Linhas Vertical-------------------------------------------  -->
 
-    
-    <div class="contorno2 linha4" style="transform: rotate(180deg);">
-        <div v-for="item in pecasjogadas4" :key="item" style="margin-right: 5px;">
-            <div class="rodar ">
-                <Peca Tamanho="30px" :Valor="item.value" :Virada="false" :Rotacionar="item.valuePosicao"></Peca>
+      <div class="verticalD" id="LinhaDireita" ref="DivLinhaDireita">
+        <div class="contornoVertical LinhaDireita">
+          <div
+            v-for="item in pecasjogadas3"
+            :key="item"
+            style="margin-right: 5px"
+          >
+            <div class="rodar">
+              <Peca
+                Tamanho="30px"
+                :Valor="item.value"
+                :Virada="false"
+                :Rotacionar="item.valuePosicao == 'rotate(0deg)' ? 'rotate(90deg)' : item.valuePosicao"
+                style="display: flex"
+                :style="{
+                  bottom: '15px',
+                }"
+              ></Peca>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    
-</div>
+  </div>
 </template>
-  
+
 <script>
-import { onMounted, ref, defineComponent, watch } from 'vue';
-import { usePecasStore } from "../stores/PecasStores"
-import Peca from '../components/Peca.vue';
+import { onMounted, ref, defineComponent, watch } from "vue";
+import { usePecasStore } from "../stores/PecasStores";
+import Peca from "../components/Peca.vue";
 
 export default defineComponent({
-    name: 'Mesa',
-    components: { Peca },
-    props: { Valor: String, },
+  name: "Mesa",
+  components: { Peca },
+  props: { Valor: String },
 
+  setup(props) {
+    const Algoritmo = usePecasStore();
+    const comeco = ref(-1);
+    const fim = ref(-1);
+    const pecasjogadas1 = ref([]);
+    const pecasjogadas2 = ref([]);
+    const pecasjogadas3 = ref([]);
+    const pecasjogadas4 = ref([]);
+    const pecasjogadas5 = ref([]);
 
-    setup(props) {
+    const DivLinhaEsquerda = ref(null);
+    const DivLinhaDireita = ref(null);
+    const DivLinhaBaixo = ref(null);
 
-        const Algoritmo = usePecasStore();
-        const comeco = ref(-1);
-        const fim = ref(-1);
-        const pecasjogadas1 = ref([]);
-        const pecasjogadas2 = ref([]);
-        const pecasjogadas3 = ref([]);
-        const pecasjogadas4 = ref([]);
-        const pecasjogadas5 = ref([]);
+    const larguraDivEsquerda = ref(0);
+    const alturaDivEsquerda = ref(0);
 
-        const sentido = ref('');
-        onMounted(() => {
+    const larguraDivDireita = ref(0);
+    const alturaDivDireita = ref(0);
 
+    const larguraDivBaixo = ref(0);
+    const alturaDivBaixo = ref(0);
 
-        })
-        watch(() => props.Valor, (first, second) => {
-            organizarpeca(first);
-        });
+    const vezbaixo = ref(0);
 
-        function organizarpeca(valor) {
-            if (valor === 'Reset') {
-                comeco.value  = -1;
-                fim.value  = -1;
-                sentido.value  = '';
-                pecasjogadas1.value = [];
-                pecasjogadas2.value = [];
-                pecasjogadas3.value = [];
-                pecasjogadas4.value = [];
-                pecasjogadas5.value = [];
+    const sentido = ref("");
+    onMounted(() => {});
+    watch(
+      () => props.Valor,
+      (first, second) => {
+        organizarpeca(first);
+      }
+    );
 
-                return
-            }
+    function organizarpeca(valor) {
+      if (valor === "Reset") {
+        comeco.value = -1;
+        fim.value = -1;
+        sentido.value = "";
+        pecasjogadas1.value = [];
+        pecasjogadas2.value = [];
+        pecasjogadas3.value = [];
+        pecasjogadas4.value = [];
+        pecasjogadas5.value = [];
 
-            const pecacolocando = new Audio('/src/assets/musicas/pecaDomino.m4a');
-            if (valor == '' || valor == null) {
-                return
-            }
-            const valores = Algoritmo.ConsultaValor(valor);
-            const obj = {};
-            if (comeco.value == -1 || fim.value == -1) {
-                comeco.value = valores.L1;
-                fim.value = valores.L2;
-                if (valor == 'I28' || valor == 'I21' || valor == 'I15' || valor == 'I10' || valor == 'I6' || valor == 'I3' || valor == 'I1') {
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(0deg)';
+        return;
+      }
 
-                } else {
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(-90deg)';
-
-                }
-                pecasjogadas1.value.push(obj);
-            }
-            else if (valores.L1 == comeco.value || valores.L2 == comeco.value) {
-                if (valores.L1 == comeco.value && valores.L2 == comeco.value) {
-                    comeco.value = valores.L1;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(0deg)';
-
-
-                }
-                else if (valores.L1 == comeco.value) {
-                    comeco.value = valores.L2;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(90deg)';
-
-                } else {
-                    comeco.value = valores.L1;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(-90deg)';
-
-
-                }
-                if (pecasjogadas1.value.length < 12) {
-                    pecasjogadas1.value.unshift(obj);
-
-                }else if(pecasjogadas3.value.length < 2){
-                    pecasjogadas3.value.unshift(obj);
-
-                }else{
-                    pecasjogadas5.value.unshift(obj);
-                }
-
-            }
-            else {
-                if (valores.L1 == fim.value && valores.L2 == fim.value) {
-                    fim.value = valores.L1;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(0deg)';
-                }
-                else if (valores.L1 == fim.value) {
-                    fim.value = valores.L2;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(-90deg)';
-
-
-                } else {
-                    fim.value = valores.L1;
-                    obj.value = valor;
-                    obj.valuePosicao = 'rotate(90deg)';
-
-                }
-                if (pecasjogadas1.value.length < 12) {
-                    pecasjogadas1.value.push(obj);
-
-                }else if(pecasjogadas2.value.length < 2){
-                    pecasjogadas2.value.push(obj);
-
-                }else{
-                    pecasjogadas4.value.push(obj);
-                }
-
-            }
-            pecacolocando.play();
-
+      const pecacolocando = new Audio("/src/assets/musicas/pecaDomino.m4a");
+      if (valor == "" || valor == null) {
+        return;
+      }
+      const valores = Algoritmo.ConsultaValor(valor);
+      const obj = {};
+      if (comeco.value == -1 || fim.value == -1) {
+        comeco.value = valores.L1;
+        fim.value = valores.L2;
+        if (
+          valor == "I28" ||
+          valor == "I21" ||
+          valor == "I15" ||
+          valor == "I10" ||
+          valor == "I6" ||
+          valor == "I3" ||
+          valor == "I1"
+        ) {
+          obj.value = valor;
+          obj.valuePosicao = "rotate(0deg)";
+        } else {
+          obj.value = valor;
+          obj.valuePosicao = "rotate(-90deg)";
         }
-
-        return {
-
-            Algoritmo,
-            comeco,
-            fim,
-            pecasjogadas1,
-            pecasjogadas2,
-            pecasjogadas3,
-            pecasjogadas4,
-            pecasjogadas5,
-            organizarpeca,
-            sentido,
-
+        pecasjogadas1.value.push(obj);
+      } else if (valores.L1 == comeco.value || valores.L2 == comeco.value) {
+        if (valores.L1 == comeco.value && valores.L2 == comeco.value) {
+          comeco.value = valores.L1;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(0deg)";
+        } else if (valores.L1 == comeco.value) {
+          comeco.value = valores.L2;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(90deg)";
+        } else {
+          comeco.value = valores.L1;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(-90deg)";
         }
+        if (pecasjogadas1.value.length < 12) {
+          vezbaixo.value = 0;
+          pecasjogadas1.value.unshift(obj);
+        } else if (pecasjogadas3.value.length < 2) {
+          vezbaixo.value = 0;
+          pecasjogadas3.value.unshift(obj);
+        } else {
+          vezbaixo.value = 72;
+          pecasjogadas5.value.unshift(obj);
+        }
+      } else {
+        if (valores.L1 == fim.value && valores.L2 == fim.value) {
+          fim.value = valores.L1;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(0deg)";
+        } else if (valores.L1 == fim.value) {
+          fim.value = valores.L2;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(-90deg)";
+        } else {
+          fim.value = valores.L1;
+          obj.value = valor;
+          obj.valuePosicao = "rotate(90deg)";
+        }
+        if (pecasjogadas1.value.length < 12) {
+          vezbaixo.value = 0;
+          pecasjogadas1.value.push(obj);
+        } else if (pecasjogadas2.value.length < 2) {
+          vezbaixo.value = 0;
+          pecasjogadas2.value.push(obj);
+        } else {
+          vezbaixo.value = 0;
+          pecasjogadas4.value.push(obj);
+        }
+      }
+
+      larguraDivEsquerda.value = DivLinhaEsquerda.value.offsetWidth;
+      alturaDivEsquerda.value = DivLinhaEsquerda.value.offsetHeight;
+
+      larguraDivDireita.value = DivLinhaDireita.value.offsetWidth;
+      alturaDivDireita.value = DivLinhaDireita.value.offsetHeight;
+
+      larguraDivBaixo.value = DivLinhaBaixo.value.offsetWidth;
+      alturaDivBaixo.value = DivLinhaBaixo.value.offsetHeight;
+      pecacolocando.play();
     }
 
+    return {
+      Algoritmo,
+      comeco,
+      fim,
+      pecasjogadas1,
+      pecasjogadas2,
+      pecasjogadas3,
+      pecasjogadas4,
+      pecasjogadas5,
+      organizarpeca,
+      sentido,
+      alturaDivDireita,
+      larguraDivDireita,
+      alturaDivEsquerda,
+      larguraDivEsquerda,
+      DivLinhaEsquerda,
+      DivLinhaDireita,
+      alturaDivBaixo,
+      larguraDivBaixo,
+      DivLinhaBaixo,
+      vezbaixo
+    };
+  },
 });
-
-
 </script>
 
 <style scoped>
-.mesa{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.caixa {
+  width: max-content;
+  height: max-content;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 1%;
+}
+.horizontal {
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+.verticalE {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  transform: rotate(-90deg) translateX(calc(85% + 50px));
+  transform-origin: bottom right;
+}
+.verticalD {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  transform: rotate(-90deg) translateX(calc(-85% - 40px));
+  transform-origin: top left;
+}
+.contornoVeritical {
+  display: flex;
+}
+.contornoHorizontal {
+  width: max-content;
+  height: max-content;
+  display: flex;
+}
 
-}
-.linha1{
-    
-}
-.linha4{
-  right: 18%;
-
-}
-.linha5{
-    top: -33%;
-  left: 18%;
-
-}
-.linha2{
-    right: 90px;
-    top:  89px;
-}
-.linha3{
-    right: -86px;
-    top:  -89px;
-}
-.contorno {
-    min-width: 30px;
-    min-height: 30px;
-    max-width: max-content;
-    max-height: max-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border-radius: 10px;
-}
-.contorno2 {
-    min-width: 30px;
-    min-height: 30px;
-    position: absolute;
-    max-width: max-content;
-    max-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border-radius: 10px;
-    bottom: 30px;
+.mesa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .rodar {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* Linhas  */
+
+.LinhaEsquerda {
+  display: flex;
+  margin-left: 0;
+}
+.LinhaDireita {
+  display: flex;
+  margin-left: 0;
+}
+.LinhaTopo {
+
+  display: flex;
+  position: absolute;
+  bottom: calc(100% + 25px);
+  right: calc(0);
+}
+.LinhaPrincipal {
+  transform: rotate(180deg);
+}
+
+.LinhaEmbaixo {
+  position: absolute;
+  top: calc(100% + 25px);
 }
 </style>

@@ -306,6 +306,7 @@ export default defineComponent({
       }, 3000);
     }
     function jogadorJogar() {
+
       if (Algoritmo.VezJogador == 1) {
         const possiveis = Algoritmo.posives(
           Algoritmo.numerospossiveis,
@@ -314,6 +315,7 @@ export default defineComponent({
         if (possiveis == 0 || possiveis == null) {
           if (Algoritmo.PecasCompra.length == 0) {
             if (checarfim() == -1) {
+              liberado.value = false;
               IaJogar();
             }
             if (
@@ -322,6 +324,7 @@ export default defineComponent({
                 Algoritmo.PecasMaoJogador1
               ).length == 0
             ) {
+              liberado.value = false;
               IaJogar();
             }
           } else {
@@ -330,6 +333,7 @@ export default defineComponent({
         } else {
           if (Algoritmo.PecasCompra.length == 0) {
             if (checarfim() == -1) {
+              liberado.value = false;
               IaJogar();
             }
           } else {
@@ -363,6 +367,7 @@ export default defineComponent({
         Algoritmo.numerospossiveis.indexOf(peca.L2) != -1
       ) {
         precisacomprar.value = false;
+        liberado.value = true;
         btncomp.value = false;
       } else {
         precisacomprar.value = true;
