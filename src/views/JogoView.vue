@@ -90,7 +90,7 @@
               :key="item"
               style="margin-right: 5px"
             >
-              <Peca Tamanho="35px" :Valor="item" :Virada="true"></Peca>
+              <Peca Tamanho="35px" :Valor="item" :Virada="!StoreCheat.getPecasAdversario"></Peca>
             </div>
           </div>
         </div>
@@ -164,6 +164,8 @@ import Peca from "../components/Peca.vue";
 import Menu from "../components/Menu.vue";
 import { usePecasStore } from "../stores/PecasStores";
 import mesa from "../components/mesa.vue";
+import { useCheatsStore } from "../stores/Cheats";
+
 export default defineComponent({
   name: "Jogo",
   components: { Peca, Menu, mesa },
@@ -180,6 +182,7 @@ export default defineComponent({
     const MenMenu = ref("");
     const CorMenu = ref("Black");
     const PecaJogada = ref("");
+    const StoreCheat = useCheatsStore();
 
     onMounted(() => {
       comecar();
@@ -404,6 +407,7 @@ export default defineComponent({
       checarfim,
       PecaJogada,
       reset,
+      StoreCheat
     };
   },
 });
