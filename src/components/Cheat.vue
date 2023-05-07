@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { onMounted, ref, defineComponent } from "vue";
+import { onMounted, ref, defineComponent, watch } from "vue";
 import { usePecasStore } from "../stores/PecasStores";
 import { useCheatsStore } from "../stores/Cheats";
 
@@ -57,7 +57,17 @@ export default defineComponent({
       } else if (jogador == "jog1") {
         Algoritmo.PontosJog1 = PontosDoJogador.value;
       }
-    }
+    };
+    watch(
+      () => Algoritmo.PontosIA,
+      (first, second) => {
+        PontosDaIA.value = first;
+      },
+      () => Algoritmo.PontosJog1,
+      (first, second) => {
+        PontosDoJogador.value = first;
+      }
+    );
 
     function cheat() {
       StoreCheat.setPecasAdversario(!StoreCheat.getPecasAdversario);

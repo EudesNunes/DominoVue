@@ -47,7 +47,9 @@ export const usePecasStore = defineStore("pecas", {
     PontosJog1: 0,
     PontosJog2: 0,
     PontosJog3: 0,
-    NumeroRodadas: 0,
+    Escolhido: 0,
+    JaEscolhido: false,
+
   }),
   actions: {
     $reset(tipo) {
@@ -174,6 +176,24 @@ export const usePecasStore = defineStore("pecas", {
         pecasTotais.push(randomIndex);
       }
       return pecasTotais;
+    },
+
+    Checar2ladorPossives(peca){
+      let valorPeca = this.ConsultaValor(peca);
+
+      if(valorPeca.L1 == this.numerospossiveis[0]){
+        if(valorPeca.L2 == this.numerospossiveis[1]){
+          return 1;
+        }
+        return 0;
+      }else if(valorPeca.L1 == this.numerospossiveis[1]){
+        if(valorPeca.L2 == this.numerospossiveis[0]){
+          return 1;
+        }
+        return 0;
+      }
+      return 0;
+
     },
     ConsultaValor(peca) {
       let local = peca;
@@ -459,25 +479,33 @@ export const usePecasStore = defineStore("pecas", {
         this.numerospossiveis.push(peca.L1);
         this.numerospossiveis.push(peca.L2);
       } else {
-        const numeros = this.numerospossiveis;
-        let test = false;
-        numeros.forEach((element) => {
-          if (test == false) {
-            if (element == peca.L1) {
-              this.numerospossiveis.splice(
-                this.numerospossiveis.indexOf(element),
-                1, peca.L2
-              );
-              test = true;
-            } else if (element == peca.L2) {
-              this.numerospossiveis.splice(
-                this.numerospossiveis.indexOf(element),
-                1, peca.L1
-              );
-              test = true;
+        if(!this.JaEscolhido){
+          const numeros = this.numerospossiveis;
+          let test = false;
+          numeros.forEach((element) => {
+            if (test == false) {
+              if (element == peca.L1) {
+                this.numerospossiveis.splice(
+                  this.numerospossiveis.indexOf(element),
+                  1, peca.L2
+                );
+                test = true;
+              } else if (element == peca.L2) {
+                this.numerospossiveis.splice(
+                  this.numerospossiveis.indexOf(element),
+                  1, peca.L1
+                );
+                test = true;
+              }
             }
-          }
-        });
+          });
+        }else{
+          this.numerospossiveis.splice(
+            this.numerospossiveis.indexOf(this.Escolhido),
+            1, (peca.L1 == this.Escolhido ? peca.L2 : peca.L1)
+          );
+        }
+        
       }
     },
   },

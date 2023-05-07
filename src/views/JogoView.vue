@@ -1,5 +1,12 @@
 <template>
   <div class="body">
+    <div class="EscolhaLado" v-show="EscolhaLado">
+      <Lado
+        @sair="sairEscolhaLado"
+        :Peca="PecaJogadaLado"
+        @pecaSelecionada="escolhaExterna"
+      ></Lado>
+    </div>
     <div class="principal">
       <div
         class="COMPRA"
@@ -90,7 +97,11 @@
               :key="item"
               style="margin-right: 5px"
             >
-              <Peca Tamanho="35px" :Valor="item" :Virada="!StoreCheat.getPecasAdversario"></Peca>
+              <Peca
+                Tamanho="35px"
+                :Valor="item"
+                :Virada="!StoreCheat.getPecasAdversario"
+              ></Peca>
             </div>
           </div>
         </div>
@@ -165,10 +176,11 @@ import Menu from "../components/Menu.vue";
 import { usePecasStore } from "../stores/PecasStores";
 import mesa from "../components/mesa.vue";
 import { useCheatsStore } from "../stores/Cheats";
+import Lado from "../components/Lado.vue";
 
 export default defineComponent({
   name: "Jogo",
-  components: { Peca, Menu, mesa },
+  components: { Peca, Menu, mesa, Lado },
   setup(props) {
     const Algoritmo = usePecasStore();
     const possiveis = ref([]);
@@ -179,9 +191,11 @@ export default defineComponent({
     const btncomp = ref(false);
     const fimpartida = ref(false);
     const fimrodada = ref(false);
+    const EscolhaLado = ref(false);
     const MenMenu = ref("");
     const CorMenu = ref("Black");
     const PecaJogada = ref("");
+    const PecaJogadaLado = ref("");
     const StoreCheat = useCheatsStore();
 
     onMounted(() => {
@@ -190,6 +204,17 @@ export default defineComponent({
 
     function cont() {
       menu.value = false;
+    }
+    function sairEscolhaLado() {
+      EscolhaLado.value = false;
+    }
+    function escolhaExterna(eventData) {
+      Algoritmo.JaEscolhido = true;
+      console.log("escolhaExterna", eventData, Algoritmo.JaEscolhido);
+      PecaJogada.value = eventData;
+      if (checarfim() == -1) {
+        IaJogar();
+      }
     }
     function ativarMenu() {
       MenMenu.value = "";
@@ -277,7 +302,7 @@ export default defineComponent({
           return 1;
 
         case -20:
-        fimpartida.value = true;
+          fimpartida.value = true;
           MenMenu.value = `Empate . IA:${Algoritmo.PontosIA} pontos e Jogador:${Algoritmo.PontosJog1} pontos`;
           CorMenu.value = "Yellow";
           reset();
@@ -290,58 +315,58 @@ export default defineComponent({
     function IaJogar() {
       setTimeout(function () {
         if (Algoritmo.VezJogador == 0) {
-          const valor = Algoritmo.escolhaIA(Algoritmo.numerospossiveis);
-          if (valor != -1) {
-            PecaJogada.value = valor;
-            Algoritmo.jogarPeca(valor);
+          if (
+            !(
+              Algoritmo.getPecasCompra.length == 0 &&
+              Algoritmo.posives(
+                Algoritmo.numerospossiveis,
+                Algoritmo.PecasMaoIA
+              ).length == 0
+            )
+          ) {
+            const valor = Algoritmo.escolhaIA(Algoritmo.numerospossiveis);
+            if (valor != -1) {
+              PecaJogada.value = valor;
+              Algoritmo.jogarPeca(valor);
+            }
           }
         }
         if (checarfim() == -1) {
           jogadorJogar();
         }
-        if (
-          Algoritmo.getPecasCompra.length == 0 &&
-          Algoritmo.posives(Algoritmo.numerospossiveis, Algoritmo.PecasMaoIA)
-            .length == 0
-        ) {
-          jogadorJogar();
-        }
-      }, 3000);
+      }, 2000);
     }
     function jogadorJogar() {
-
       if (Algoritmo.VezJogador == 1) {
         const possiveis = Algoritmo.posives(
           Algoritmo.numerospossiveis,
           Algoritmo.PecasMaoJogador1
         );
-        if (possiveis == 0 || possiveis == null) {
-          if (Algoritmo.PecasCompra.length == 0) {
-            if (checarfim() == -1) {
-              liberado.value = false;
-              IaJogar();
-            }
-            if (
-              Algoritmo.posives(
-                Algoritmo.numerospossiveis,
-                Algoritmo.PecasMaoJogador1
-              ).length == 0
-            ) {
-              liberado.value = false;
-              IaJogar();
-            }
-          } else {
-            btncomp.value = true;
-          }
-        } else {
-          if (Algoritmo.PecasCompra.length == 0) {
-            if (checarfim() == -1) {
-              liberado.value = false;
-              IaJogar();
+        if (checarfim() == -1) {
+          if (possiveis == 0 || possiveis == null) {
+            if (Algoritmo.PecasCompra.length == 0) {
+              if (
+                Algoritmo.posives(
+                  Algoritmo.numerospossiveis,
+                  Algoritmo.PecasMaoJogador1
+                ).length == 0
+              ) {
+                liberado.value = false;
+                IaJogar();
+              }
+            } else {
+              btncomp.value = true;
             }
           } else {
-            liberado.value = true;
-            btncomp.value = false;
+            if (Algoritmo.PecasCompra.length == 0) {
+              if (checarfim() == -1) {
+                liberado.value = false;
+                IaJogar();
+              }
+            } else {
+              liberado.value = true;
+              btncomp.value = false;
+            }
           }
         }
       }
@@ -354,12 +379,19 @@ export default defineComponent({
           Algoritmo.PecasMaoJogador1
         );
         if (possiveis.indexOf(data) != -1) {
-          PecaJogada.value = data;
-          Algoritmo.jogarPeca(data);
+          if (Algoritmo.Checar2ladorPossives(data)) {
+            console.log("checarvalor", data);
+            PecaJogadaLado.value = data;
+            EscolhaLado.value = true;
+          } else {
+            PecaJogada.value = data;
+            Algoritmo.jogarPeca(data);
+            if (checarfim() == -1) {
+              IaJogar();
+            }
+          }
         }
-        if (checarfim() == -1) {
-          IaJogar();
-        }
+        
       }
     }
     function ComprarPeca(data) {
@@ -407,7 +439,11 @@ export default defineComponent({
       checarfim,
       PecaJogada,
       reset,
-      StoreCheat
+      StoreCheat,
+      EscolhaLado,
+      sairEscolhaLado,
+      escolhaExterna,
+      PecaJogadaLado,
     };
   },
 });
@@ -572,6 +608,15 @@ export default defineComponent({
   align-items: center;
   margin: 0 auto;
   z-index: 30;
+  display: flex;
+}
+.EscolhaLado {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: end;
+  margin: 0 auto;
+  z-index: 50;
   display: flex;
 }
 

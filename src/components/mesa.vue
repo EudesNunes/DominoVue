@@ -174,7 +174,7 @@ export default defineComponent({
 
         return;
       }
-
+      console.log(Algoritmo.JaEscolhido, Algoritmo.Escolhido, comeco.value );
       const pecacolocando = new Audio("/src/assets/musicas/pecaDomino.m4a");
       if (valor == "" || valor == null) {
         return;
@@ -200,7 +200,7 @@ export default defineComponent({
           obj.valuePosicao = "rotate(-90deg)";
         }
         pecasjogadas1.value.push(obj);
-      } else if (valores.L1 == comeco.value || valores.L2 == comeco.value) {
+      } else if ((Algoritmo.JaEscolhido && Algoritmo.Escolhido == comeco.value) || (!Algoritmo.JaEscolhido && (valores.L1 == comeco.value || valores.L2 == comeco.value))) {
         if (valores.L1 == comeco.value && valores.L2 == comeco.value) {
           comeco.value = valores.L1;
           obj.value = valor;
@@ -249,6 +249,7 @@ export default defineComponent({
           pecasjogadas4.value.push(obj);
         }
       }
+      Algoritmo.JaEscolhido = false;
 
       larguraDivEsquerda.value = DivLinhaEsquerda.value.offsetWidth;
       alturaDivEsquerda.value = DivLinhaEsquerda.value.offsetHeight;
