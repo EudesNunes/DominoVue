@@ -18,7 +18,12 @@
           style="margin-right: 5px"
           @click="ComprarPeca(item)"
         >
-          <Peca Tamanho="60px" :Valor="item" :Virada="true"></Peca>
+          <Peca
+            Tamanho="60px"
+            :Valor="item"
+            :Virada="!StoreCheat.getPecasCompra"
+            style="cursor: pointer"
+          ></Peca>
         </div>
       </div>
       <div class="Menu" v-show="menu == true">
@@ -51,7 +56,9 @@
       <!--------------------- BTNs----------------------------------- -->
 
       <div class="divbotao">
-        <button class="botaomenu" @click="ativarMenu()">Menu Inicial</button>
+        <button class="botaomenu" @click="ativarMenu()" style="cursor: pointer">
+          Menu Inicial
+        </button>
       </div>
 
       <!--------------------- Sobre o jogador e IA----------------------------------- -->
@@ -109,7 +116,7 @@
 
       <!--------------------- Mesa----------------------------------- -->
       <div
-        class="mesa"
+        class="mesacentral"
         style="
           color: black;
           justify-content: center;
@@ -129,7 +136,7 @@
         <!-- <h1>{{ Algoritmo.numerospossiveis }}</h1> -->
       </div>
 
-      <!--------------------- Caixa do jogaodr----------------------------------- -->
+      <!--------------------- Caixa do jogaodor----------------------------------- -->
       <div class="embaixo">
         <div
           style="
@@ -140,8 +147,17 @@
             display: inline-flex;
           "
         >
-          <div class="Divbtncomprar" v-show="btncomp">
-            <button class="btncomprar" @click="ativarcomprar()">Comprar</button>
+          <div
+            class="Divbtncomprar"
+            v-show="StoreCheat.getBotaoCompra || btncomp"
+          >
+            <button
+              class="btncomprar"
+              style="cursor: pointer"
+              @click="ativarcomprar()"
+            >
+              Comprar
+            </button>
           </div>
           <div class="caixa">
             <div
@@ -159,7 +175,12 @@
                   ).indexOf(item) == -1 || Algoritmo.VezJogador != 1
                 "
               ></div>
-              <Peca Tamanho="35px" :Valor="item" :Virada="false"></Peca>
+              <Peca
+                Tamanho="35px"
+                :Valor="item"
+                :Virada="false"
+                style="cursor: pointer"
+              ></Peca>
             </div>
           </div>
         </div>
@@ -391,7 +412,6 @@ export default defineComponent({
             }
           }
         }
-        
       }
     }
     function ComprarPeca(data) {
@@ -564,14 +584,15 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   display: flex;
+  z-index: 22;
 }
 
-.mesa {
+.mesacentral {
   background-image: url("/src/assets/img/mesa.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  width: 85%;
+  width: 80%;
   height: 75%;
   margin: 0 auto;
   border-radius: 20px;

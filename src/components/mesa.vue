@@ -43,7 +43,7 @@
                 Tamanho="30px"
                 :Valor="item.value"
                 :Virada="false"
-                :Rotacionar="item.valuePosicao"
+                :Rotacionar="item.valuePosicao == 'rotate(0deg)' ? 'rotate(90deg)' : item.valuePosicao"
                 :style="{
                   top: '10px' ,
                 }"

@@ -10,11 +10,31 @@
         <input
           class="checkbox"
           type="checkbox"
+          id="obseradversario"
           v-model="StoreCheat.getPecasAdversario"
-          @click="cheat"
+          @click="cheatPecasAdversario"
         />
       </div>
-      
+      <div class="containerCheckbox">
+        <label>Observar as peças para compra</label>
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="obserCompra"
+          v-model="StoreCheat.getPecasAdversario"
+          @click="cheatPecasCompra"
+        />
+      </div>
+      <div class="containerCheckbox">
+        <label>Ativar botão comprar</label>
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="botaocompra"
+          v-model="StoreCheat.getBotaoCompra"
+          @click="cheatBotaoCompra"
+        />
+      </div>
       <div class="containerNumber">
         <label>Modificar pontos do adversário: </label>
         <input class="Number" type="number" v-model="PontosDaIA" />
@@ -69,13 +89,21 @@ export default defineComponent({
       }
     );
 
-    function cheat() {
+    function cheatPecasAdversario() {
       StoreCheat.setPecasAdversario(!StoreCheat.getPecasAdversario);
+    }
+    function cheatPecasCompra() {
+      StoreCheat.setPecasCompra(!StoreCheat.getPecasCompra);
+    }
+    function cheatBotaoCompra() {
+      StoreCheat.setBotaoCompra(!StoreCheat.getBotaoCompra);
     }
 
     return {
       Algoritmo,
-      cheat,
+      cheatPecasAdversario,
+      cheatPecasCompra,
+      cheatBotaoCompra,
       StoreCheat,
       PontosDaIA,
       modificarPontos,
