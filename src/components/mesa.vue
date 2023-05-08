@@ -354,7 +354,6 @@ export default defineComponent({
   display: flex;
   position: absolute;
   bottom: calc(100% + 25px);
-  right: calc(0);
 }
 .LinhaPrincipal {
   transform: rotate(180deg);
