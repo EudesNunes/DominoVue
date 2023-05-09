@@ -92,7 +92,6 @@ export default defineComponent({
     const L2 = ref('');
 
     onMounted(() => {
-      console.log(L1.value, L2.value, props.Peca);
     });
     watch(
       () => props.Peca,
@@ -103,7 +102,6 @@ export default defineComponent({
     );
 
     function checarvalor(valor) {
-      console.log(valor, "dentro de lado");
       Algoritmo.Escolhido = valor;
       Algoritmo.JaEscolhido = true;
       Algoritmo.jogarPeca(props.Peca);

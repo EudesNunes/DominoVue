@@ -175,7 +175,6 @@ export default defineComponent({
 
         return;
       }
-      console.log(Algoritmo.JaEscolhido, Algoritmo.Escolhido, comeco.value );
       if (valor == "" || valor == null) {
         return;
       }

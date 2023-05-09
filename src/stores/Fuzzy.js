@@ -45,12 +45,12 @@ export const useFuzzy = defineStore("fuzzy", () => {
       resultado = NaN;
     } else {
       resultado =
-        (this.PecaIgual(PecaIgual) +
-          this.ValorAlto(ValorAlto) +
-          this.PecaEmjogo(PecaEmjogo)) /
-        3;
+        (this.PecaIgual(PecaIgual) * 0.7 +
+          this.ValorAlto(ValorAlto) * 0.8 +
+          this.PecaEmjogo(PecaEmjogo) * 0.6) /
+        (0.7 + 0.8 + 0.6);
     }
-
+    console.log(resultado)
     return resultado;
   }
   return { PecaIgual, ValorAlto, PecaEmjogo, regras };

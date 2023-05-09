@@ -231,7 +231,6 @@ export default defineComponent({
     }
     function escolhaExterna(eventData) {
       Algoritmo.JaEscolhido = true;
-      console.log("escolhaExterna", eventData, Algoritmo.JaEscolhido);
       PecaJogada.value = eventData;
       if (checarfim() == -1) {
         IaJogar();
@@ -401,7 +400,6 @@ export default defineComponent({
         );
         if (possiveis.indexOf(data) != -1) {
           if (Algoritmo.Checar2ladorPossives(data)) {
-            console.log("checarvalor", data);
             PecaJogadaLado.value = data;
             EscolhaLado.value = true;
           } else {
