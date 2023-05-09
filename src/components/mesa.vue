@@ -151,6 +151,7 @@ export default defineComponent({
     const alturaDivBaixo = ref(0);
 
     const vezbaixo = ref(0);
+    const pecacolocando = new Audio("https://drive.google.com/uc?id=13fTMOIr6s8ymxN8qA3kLTyBkbxb7AFy5");
 
     const sentido = ref("");
     onMounted(() => {});
@@ -175,7 +176,6 @@ export default defineComponent({
         return;
       }
       console.log(Algoritmo.JaEscolhido, Algoritmo.Escolhido, comeco.value );
-      const pecacolocando = new Audio("/src/assets/musicas/pecaDomino.mp3");
       if (valor == "" || valor == null) {
         return;
       }
