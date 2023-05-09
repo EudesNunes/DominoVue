@@ -175,7 +175,7 @@ export default defineComponent({
         return;
       }
       console.log(Algoritmo.JaEscolhido, Algoritmo.Escolhido, comeco.value );
-      const pecacolocando = new Audio("/src/assets/musicas/pecaDomino.m4a");
+      const pecacolocando = new Audio("/src/assets/musicas/pecaDomino.mp3");
       if (valor == "" || valor == null) {
         return;
       }
