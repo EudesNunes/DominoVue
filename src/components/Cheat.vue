@@ -21,7 +21,7 @@
           class="checkbox"
           type="checkbox"
           id="obserCompra"
-          v-model="StoreCheat.getPecasAdversario"
+          v-model="StoreCheat.getPecasCompra"
           @click="cheatPecasCompra"
         />
       </div>
