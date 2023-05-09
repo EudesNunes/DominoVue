@@ -8,7 +8,7 @@
             <div></div>
             <div class="nav_2">
               <p>
-                - Jogado em 2, 3 ou 4 pessoas; <br />
+                - Jogado em 2, 3 ou 4 pessoas; <br /><br />
                 - Cada pessoa pega 7 peças embaralhadas; <br /><br />
                 - Se sobrar peças, elas ficam em um monte para a compra;
                 <br /><br />
