@@ -16,4 +16,6 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "vite": "^4.1.4"
   }
+  "build" :{
+  "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects "
 }
